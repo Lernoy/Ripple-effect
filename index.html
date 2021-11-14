@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title></title>
+      <style>
+         .ribble_block {
+		    position: relative;
+		    overflow: hidden;
+		    display: inline-block;
+		    width: 250px;
+		    padding: 25px 0;
+		    margin: 0 auto;
+		    text-transform: uppercase;
+		    font-weight: bold;
+		    text-align: center;
+		    color: #fff;
+		    background: #e35de3;
+		    font-size: 25px;
+		    max-width: 95%;
+		 }
+		 .ribble_block:nth-of-type(2)
+		 {
+		 	width: 600px;
+		 }
+		 .ribble_block:nth-of-type(3)
+		 {
+		 	width: 400px;
+		 }
+		 .ribble_block>.help_block {
+         	top: 0;
+         	left: 0;
+         	width: 50px;
+         	height: 50px;
+         	background: #a4bf02;
+         	position: absolute;
+         	transition: transform 0.6s cubic-bezier(0.11, 0, 0.5, 0);
+         	transform: scale(0);
+         	transform-origin: center;
+         	border-radius: 50%;
+         	pointer-events: none;
+         }
+         .ribble_block .text_inside
+         {
+         	position: relative;
+         	z-index: 2;
+         	color: #fff;
+         }
+         .ribble_block.active .help_block {
+         	transform: scale(2);
+         }
+         body
+         {
+         	text-align: center;
+         }
+      </style>
+   </head>
+   <body>
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   	  <!-------------------------------------------------------------->
+      <div class="ribble_block">
+      	<span class="text_inside">Test block 1</span>
+      </div>
+      <div class="ribble_block">
+      	<span class="text_inside">Test block 2</span>
+      </div>
+      <div class="ribble_block">
+      	<span class="text_inside">Test block 3</span>
+      </div>
+      <!-------------------------------------------------------------->
+      <script type="text/javascript">
+         function get_width_help_block(hover_block) {
+          if(hover_block.children(".help_block").length!=1) hover_block.append("<span class='help_block'></span>");
+          hover_block.children(".help_block").css({"width":hover_block.width()*2,
+                                                   "height":hover_block.width()*2,
+                                                   "top": "-" + (hover_block.width()-(event.pageY-hover_block.offset().top))+"px",
+                                                   "left":event.pageX - hover_block.offset().left-hover_block.width()}); 
+         }
+         $(".ribble_block").on("mouseenter",function(){
+          get_width_help_block($(this));
+          console.log("a");
+          $(this).addClass("active");
+         }); 
+         $(".ribble_block").on("mouseleave",function(){
+          $(this).removeClass("active");
+         });
+      </script>
+	  <!-------------------------------------------------------------->
+   </body>
+</html>
